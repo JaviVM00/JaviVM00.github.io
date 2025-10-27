@@ -1,1 +1,295 @@
-<a href="certificates/certificates.html">Certificates</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name – Certificates</title>
+  <meta name="description" content="A simple, responsive certificates portfolio for GitHub Pages." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;          /* page background */
+      --card: #121821;        /* card background */
+      --text: #e8eef6;        /* primary text */
+      --muted: #b9c4d1;       /* secondary text */
+      --brand: #4ea1ff;       /* accent */
+      --ring: rgba(78,161,255,.35);
+      --chip: #1b2430;
+      --chip-border: #2b384c;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f6f8fb; --card: #ffffff; --text: #0b1220; --muted:#445063; --chip:#f1f5fb; --chip-border:#e5edf8; }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; margin-bottom: 20px; }
+    .title { font-weight: 800; letter-spacing: .2px; }
+    .title small { display:block; font-weight: 400; color: var(--muted); margin-top: 6px; }
+
+    .controls { display: grid; grid-template-columns: 1fr 180px 160px; gap: 12px; }
+    .input, .select { background: var(--card); color: var(--text); border: 1px solid #202b3a; border-radius: 12px; padding: 12px 14px; outline: none; }
+    .input:focus, .select:focus { border-color: var(--brand); box-shadow: 0 0 0 6px var(--ring); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chip { background: var(--chip); border: 1px solid var(--chip-border); color: var(--text); padding: 6px 10px; border-radius: 999px; font-size: 12px; cursor: pointer; }
+    .chip.active { background: var(--brand); border-color: transparent; color: white; }
+
+    .grid { display: grid; grid-template-columns: repeat(1, minmax(0,1fr)); gap: 16px; margin-top: 18px; }
+    @media (min-width: 600px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (min-width: 960px) { .grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+
+    .card { background: var(--card); border: 1px solid #1c2533; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: transform .15s ease, box-shadow .15s ease; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+
+    .issuer { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+    .issuer img { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; background: white; }
+    .cert-title { font-weight: 700; line-height: 1.3; }
+    .meta { display: grid; grid-template-columns: 1fr auto; gap: 8px; color: var(--muted); font-size: 13px; }
+
+    .skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .skill { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px dashed var(--chip-border); color: var(--muted); }
+
+    .actions { margin-top: auto; display: flex; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; border: 1px solid #253144; border-radius: 10px; background: #16202c; color: #e6f0ff; font-weight: 600; cursor: pointer; }
+    .btn:hover { filter: brightness(1.05); }
+    .btn.secondary { background: transparent; color: var(--text); }
+
+    footer { color: var(--muted); font-size: 13px; margin: 28px 0 10px; text-align: center; }
+
+    /* Print-friendly (1 card per row) */
+    @media print {
+      header, .controls, .chips, .actions, footer { display: none !important; }
+      body { background: white; }
+      .container { max-width: none; padding: 0; }
+      .grid { grid-template-columns: 1fr !important; gap: 12px; }
+      .card { page-break-inside: avoid; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <!--
+    ========= Certificates Portfolio Template =========
+    How to use (GitHub Pages):
+    1) Create a repo named <username>.github.io or any repo and enable Pages in Settings → Pages (branch: main, folder: /root or /docs).
+    2) Put this file as index.html in the root (or /docs) of the repo.
+    3) Edit the JSON in the <script id="cert-data"> block below to add your certificates.
+    4) Commit & push. Your site is live via GitHub Pages.
+
+    Tips:
+    • Add your avatar/logo to the header by replacing headerAvatarUrl.
+    • Add issuer logos via absolute URLs (e.g., CDN, your repo /assets path) or leave empty.
+    • You can filter by year, issuer, tags using the UI.
+    • Click “Verify” to open the certificate URL (Credly, Coursera, etc.).
+  -->
+
+  <div class="container">
+    <header>
+      <div>
+        <h1 class="title">Your Name <span aria-hidden>·</span> Certificates
+          <small>Selected online courses & certifications</small>
+        </h1>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/JVM00" target="_blank" rel="noreferrer">GitHub</a>
+        &nbsp;·&nbsp;
+        <a href="https://www.linkedin.com/in/javier-vargas-moreno-757746a7/" target="_blank" rel="noreferrer">LinkedIn</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:vargas.moreno.javier@gmail.com">Email</a>
+      </div>
+    </header>
+
+    <div class="controls" role="region" aria-label="Filters">
+      <input id="search" class="input" type="search" placeholder="Search by title, issuer, skills…" aria-label="Search certificates" />
+      <select id="issuerFilter" class="select" aria-label="Filter by issuer">
+        <option value="">All issuers</option>
+      </select>
+      <select id="yearFilter" class="select" aria-label="Filter by year">
+        <option value="">All years</option>
+      </select>
+    </div>
+
+    <div id="tagBar" class="chips" role="listbox" aria-label="Tag filters"></div>
+
+    <section id="grid" class="grid" aria-live="polite" aria-busy="false"></section>
+
+    <footer>
+      Built with a single static HTML file. Host on GitHub Pages. © <span id="yearNow"></span> Your Name.
+    </footer>
+  </div>
+
+  <!-- ====== Data: Edit this JSON to add your certificates ====== -->
+  <script type="application/json" id="cert-data">{
+    "owner": {
+      "name": "Your Name",
+      "role": "Data Engineer / Analytics",
+      "headerAvatarUrl": "",  
+      "socials": {
+        "github": "https://github.com/JVM00",
+        "linkedin": "https://www.linkedin.com/in/javier-vargas-moreno-757746a7/",
+        "email": "vargas.moreno.javier@gmail.com"
+      }
+    },
+    "certificates": [
+      {
+        "title": "Microsoft Certified: Azure Data Engineer Associate",
+        "issuer": "Microsoft",
+        "issueDate": "2024-06-15",
+        "credentialId": "ABC-123-XYZ",
+        "verifyUrl": "https://learn.microsoft.com/en-us/users/your-cred",
+        "hours": 40,
+        "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoft.svg",
+        "skills": ["Azure", "Data Engineering", "ETL", "SQL"],
+        "tags": ["Cloud", "Microsoft"]
+      },
+      {
+        "title": "Machine Learning Specialization",
+        "issuer": "DeepLearning.AI / Stanford Online (Coursera)",
+        "issueDate": "2023-11-01",
+        "credentialId": "COUR-987654321",
+        "verifyUrl": "https://www.coursera.org/account/accomplishments/verify/XXXXXX",
+        "hours": 60,
+        "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/coursera.svg",
+        "skills": ["Python", "Regression", "Classification", "ML"],
+        "tags": ["ML", "Coursera"]
+      },
+      {
+        "title": "Delta Lake Fundamentals",
+        "issuer": "Databricks",
+        "issueDate": "2025-03-10",
+        "credentialId": "DB-DELTA-0001",
+        "verifyUrl": "https://credentials.databricks.com/verify/XXXX",
+        "hours": 12,
+        "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/databricks.svg",
+        "skills": ["Delta Lake", "Lakehouse", "Spark"],
+        "tags": ["Databricks", "Lakehouse"]
+      }
+    ]
+  }</script>
+
+  <script>
+    const state = {
+      data: null,
+      search: '',
+      issuer: '',
+      year: '',
+      tag: ''
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const grid = $('#grid');
+
+    function parseData() {
+      try {
+        const raw = document.getElementById('cert-data').textContent.trim();
+        const json = JSON.parse(raw);
+        return json;
+      } catch (e) {
+        console.error('Invalid JSON in cert-data', e);
+        return { owner: {}, certificates: [] };
+      }
+    }
+
+    function uniq(arr) { return [...new Set(arr)].filter(Boolean); }
+    function yearFrom(dateStr) { return (dateStr || '').split('-')[0]; }
+
+    function renderFilters(certs) {
+      const issuers = uniq(certs.map(c => c.issuer)).sort();
+      const years = uniq(certs.map(c => yearFrom(c.issueDate))).sort((a,b)=>b.localeCompare(a));
+
+      const issuerSel = document.getElementById('issuerFilter');
+      issuerSel.innerHTML = '<option value="">All issuers</option>' + issuers.map(i => `<option value="${i}">${i}</option>`).join('');
+
+      const yearSel = document.getElementById('yearFilter');
+      yearSel.innerHTML = '<option value="">All years</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+
+      const tags = uniq(certs.flatMap(c => (c.tags||[]))).slice(0, 24);
+      const tagBar = document.getElementById('tagBar');
+      tagBar.innerHTML = tags.map(t => `<button class="chip" data-tag="${t}" aria-pressed="false">${t}</button>`).join('');
+    }
+
+    function matchesFilters(cert) {
+      const txt = `${cert.title} ${cert.issuer} ${(cert.skills||[]).join(' ')} ${(cert.tags||[]).join(' ')}`.toLowerCase();
+      if (state.search && !txt.includes(state.search.toLowerCase())) return false;
+      if (state.issuer && cert.issuer !== state.issuer) return false;
+      if (state.year && yearFrom(cert.issueDate) !== state.year) return false;
+      if (state.tag && !(cert.tags||[]).includes(state.tag)) return false;
+      return true;
+    }
+
+    function card(cert) {
+      const d = new Date(cert.issueDate);
+      const dateFmt = isNaN(d) ? cert.issueDate : d.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
+      const hours = cert.hours ? `<span title="Estimated workload">· ${cert.hours}h</span>` : '';
+      const thumb = cert.thumbnail ? `<img alt="${cert.issuer} logo" src="${cert.thumbnail}" loading="lazy" />` : '';
+      const skills = (cert.skills||[]).map(s => `<span class="skill">${s}</span>`).join('');
+      const id = cert.credentialId ? `<span title="Credential ID">ID: ${cert.credentialId}</span>` : '';
+
+      return `
+        <article class="card" tabindex="0" aria-label="${cert.title} from ${cert.issuer}">
+          <div class="issuer">${thumb}<span>${cert.issuer}</span></div>
+          <div class="cert-title">${cert.title}</div>
+          <div class="meta"><span>${dateFmt} ${hours}</span><span>${id}</span></div>
+          <div class="skills">${skills}</div>
+          <div class="actions">
+            <a class="btn" href="${cert.verifyUrl}" target="_blank" rel="noreferrer noopener" aria-label="Verify ${cert.title}">🔗 Verify</a>
+            <button class="btn secondary" onclick="navigator.clipboard.writeText('${cert.verifyUrl}');this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy link',1200)">Copy link</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderGrid() {
+      const certs = state.data.certificates
+        .slice()
+        .sort((a,b)=> new Date(b.issueDate) - new Date(a.issueDate))
+        .filter(matchesFilters);
+
+      grid.setAttribute('aria-busy','true');
+      grid.innerHTML = certs.map(card).join('');
+      grid.setAttribute('aria-busy','false');
+    }
+
+    function wireUI() {
+      document.getElementById('search').addEventListener('input', (e)=>{ state.search = e.target.value; renderGrid(); });
+      document.getElementById('issuerFilter').addEventListener('change', (e)=>{ state.issuer = e.target.value; renderGrid(); });
+      document.getElementById('yearFilter').addEventListener('change', (e)=>{ state.year = e.target.value; renderGrid(); });
+      document.getElementById('tagBar').addEventListener('click', (e)=>{
+        const btn = e.target.closest('[data-tag]');
+        if (!btn) return;
+        const prev = document.querySelector('.chip.active');
+        if (prev) { prev.classList.remove('active'); prev.setAttribute('aria-pressed','false'); }
+        if (state.tag === btn.dataset.tag) { state.tag = ''; renderGrid(); return; }
+        state.tag = btn.dataset.tag; btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); renderGrid();
+      });
+    }
+
+    function hydrateHeader(owner){
+      document.title = `${owner.name} – Certificates`;
+      document.querySelector('h1.title').innerHTML = `${owner.name} <span aria-hidden>·</span> Certificates` + `<small>Selected online courses & certifications</small>`;
+      const links = [];
+      if (owner.socials?.github) links.push(`<a href="${owner.socials.github}" target="_blank" rel="noreferrer">GitHub</a>`);
+      if (owner.socials?.linkedin) links.push(`<a href="${owner.socials.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>`);
+      if (owner.socials?.email) links.push(`<a href="${owner.socials.email}">Email</a>`);
+      document.querySelector('.socials').innerHTML = links.join(' &nbsp;·&nbsp; ');
+    }
+
+    // Boot
+    (function init(){
+      document.getElementById('yearNow').textContent = new Date().getFullYear();
+      state.data = parseData();
+      hydrateHeader(state.data.owner || {});
+      renderFilters(state.data.certificates);
+      wireUI();
+      renderGrid();
+    })();
+  </script>
+</body>
+</html>
+
