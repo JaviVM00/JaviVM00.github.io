@@ -148,6 +148,7 @@
         "credentialId": "ABC-123-XYZ",
         "verifyUrl": "https://learn.microsoft.com/en-us/users/your-cred",
         "hours": 40,
+        "hidden": true,
         "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/microsoft.svg",
         "skills": ["Azure", "Data Engineering", "ETL", "SQL"],
         "tags": ["Cloud", "Microsoft"]
@@ -159,6 +160,7 @@
         "credentialId": "COUR-987654321",
         "verifyUrl": "https://www.coursera.org/account/accomplishments/verify/XXXXXX",
         "hours": 60,
+        "hidden": true,
         "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/coursera.svg",
         "skills": ["Python", "Regression", "Classification", "ML"],
         "tags": ["ML", "Coursera"]
@@ -170,6 +172,7 @@
         "credentialId": "DB-DELTA-0001",
         "verifyUrl": "https://credentials.databricks.com/verify/XXXX",
         "hours": 12,
+        "hidden": true,
         "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/databricks.svg",
         "skills": ["Delta Lake", "Lakehouse", "Spark"],
         "tags": ["Databricks", "Lakehouse"]
@@ -182,6 +185,7 @@
         "credentialId": "",
         "verifyUrl": "https://records.edx.org/shared/1918562699c94831886e09a2353e1318",
         "hours": 200,
+         "hidden": false,
         "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ibm.svg",
         "skills": [
                     "Agile Software Development",
@@ -208,6 +212,7 @@
         "credentialId": "",
         "verifyUrl": "https://records.edx.org/shared/b75e41d8c80d46669be8e081b219a995",
         "hours": 217,
+        "hidden": false,
         "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ibm.svg",
                "skills": [
           "Data Engineering",
@@ -306,6 +311,7 @@
       const certs = state.data.certificates
         .slice()
         .sort((a,b)=> new Date(b.issueDate) - new Date(a.issueDate))
+        .filter(cert => !cert.hidden)
         .filter(matchesFilters);
 
       grid.setAttribute('aria-busy','true');
