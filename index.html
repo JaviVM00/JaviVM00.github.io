@@ -289,26 +289,46 @@
     function card(cert) {
       const d = new Date(cert.issueDate);
       const dateFmt = isNaN(d) ? cert.issueDate : d.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
-      const hours = cert.hours ? `<span title="Estimated workload">· ${cert.hours}h</span>` : '';
+      // Duration label: months > hours > ISO 'duration' string (e.g., P3M or PT40H)
+      const durationLabel = (() => {
+        if (typeof cert.months === 'number' && cert.months > 0) return `· ${cert.months} mo`;
+        if (typeof cert.hours === 'number' && cert.hours > 0) return `· ${cert.hours}h`;
+        if (typeof cert.duration === 'string' && cert.duration.trim()) {
+          const s = cert.duration.trim().toUpperCase();
+          const m = s.match(/^P(?:(\d+)M)?(?:T(?:(\d+)H)?)?$/);
+          if (m) {
+            const mVal = m[1] ? parseInt(m[1],10) : 0;
+            const hVal = m[2] ? parseInt(m[2],10) : 0;
+            if (mVal) return `· ${mVal} mo`;
+            if (hVal) return `· ${hVal}h`;
+          }
+          return `· ${s}`;
+        }
+        return '';
+      })();
       const thumb = cert.thumbnail ? `<img alt="${cert.issuer} logo" src="${cert.thumbnail}" loading="lazy" />` : '';
       const skills = (cert.skills||[]).map(s => `<span class="skill">${s}</span>`).join('');
       const id = cert.credentialId ? `<span title="Credential ID">ID: ${cert.credentialId}</span>` : '';
-
+      const vurl = cert.verifyUrl || '';
+      const isPdf = typeof vurl === 'string' && /.pdf(\?|$)/i.test(vurl);
+      const verifyLabel = isPdf ? '📄 Open PDF' : '🔗 Verify';
+      const copyOrDownload = isPdf
+        ? `<a class="btn secondary" href="${vurl}" download aria-label="Download certificate PDF">Download</a>`
+        : `<button class="btn secondary" onclick="navigator.clipboard.writeText('${vurl}');this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy link',1200)">Copy link</button>`;
       return `
         <article class="card" tabindex="0" aria-label="${cert.title} from ${cert.issuer}">
           <div class="issuer">${thumb}<span>${cert.issuer}</span></div>
           <div class="cert-title">${cert.title}</div>
-          <div class="meta"><span>${dateFmt} ${hours}</span><span>${id}</span></div>
+          <div class="meta"><span>${dateFmt} ${durationLabel}</span><span>${id}</span></div>
           <div class="skills">${skills}</div>
           <div class="actions">
-            <a class="btn" href="${cert.verifyUrl}" target="_blank" rel="noreferrer noopener" aria-label="Verify ${cert.title}">🔗 Verify</a>
-            <button class="btn secondary" onclick="navigator.clipboard.writeText('${cert.verifyUrl}');this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy link',1200)">Copy link</button>
+            <a class="btn" href="${vurl}" target="_blank" rel="noreferrer noopener" aria-label="Verify ${cert.title}">${verifyLabel}</a>
+            ${copyOrDownload}
           </div>
         </article>
       `;
     }
-
-    function renderGrid() {
+function renderGrid() {
       const certs = state.data.certificates
         .slice()
         .sort((a,b)=> new Date(b.issueDate) - new Date(a.issueDate))
@@ -340,7 +360,6 @@
       const links = [];
       if (owner.socials?.github) links.push(`<a href="${owner.socials.github}" target="_blank" rel="noreferrer">GitHub</a>`);
       if (owner.socials?.linkedin) links.push(`<a href="${owner.socials.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>`);
-      if (owner.socials?.email) links.push(`<a href="${owner.socials.email}">Email</a>`);
       document.querySelector('.socials').innerHTML = links.join(' &nbsp;·&nbsp; ');
     }
 
