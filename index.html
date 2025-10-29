@@ -87,6 +87,11 @@
     • Add issuer logos via absolute URLs (e.g., CDN, your repo /assets path) or leave empty.
     • You can filter by year, issuer, tags using the UI.
     • Click “Verify” to open the certificate URL (Credly, Coursera, etc.).
+  Changes:
+      • 	Email link removed from header → It is no longer rendered anywhere.
+    • 	Extended  rendering logic → Now prioritizes displaying months over hours, or alternatively uses a  string (including ISO formats like  or ).
+    • 	Automatic PDF detection in  → Main button becomes 📄 Open PDF → Additionally, a Download button appears  → For non-PDFs, it remains 🔗 Verify + Copy link
+    • 	Hidden entries ()  → Still do not affect grid or filter behavior.
   -->
 
   <div class="container">
@@ -232,6 +237,27 @@
           "Linux & Shell Scripting"
         ],
          "tags": ["IBM", "Data Engineering", "Big Data", "Cloud", "Analytics"]
+      },
+      {
+        "title": "Data Engineering related Courses",
+        "issuer": "LinkedIn Learning",
+        "issueDate": "",
+        "credentialId": "",
+        "verifyUrl": "files/Linkedin_CertificateOfCompletion_01.pdf",
+        "hours": 30,
+        "hidden": false,
+        "thumbnail": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg",
+               "skills": [
+          "Data Engineering",
+          "ETL Pipelines",
+          "SQL",
+          "Python",
+          "Relational Databases",
+          "Big Data Analytics",
+          "Data Lakes",
+          "Data Modeling"
+        ],
+         "tags": ["LinkedIn", "Data Engineering"]
       }
     ]
   }</script>
