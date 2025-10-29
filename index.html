@@ -262,8 +262,9 @@
     function yearFrom(dateStr) { return (dateStr || '').split('-')[0]; }
 
     function renderFilters(certs) {
-      const issuers = uniq(certs.map(c => c.issuer)).sort();
-      const years = uniq(certs.map(c => yearFrom(c.issueDate))).sort((a,b)=>b.localeCompare(a));
+      const visible = certs.filter(c => !c.hidden);
+      const issuers = uniq(visible.map(c => c.issuer)).sort();
+      const years = uniq(visible.map(c => yearFrom(c.issueDate))).sort((a,b)=>b.localeCompare(a));
 
       const issuerSel = document.getElementById('issuerFilter');
       issuerSel.innerHTML = '<option value="">All issuers</option>' + issuers.map(i => `<option value="${i}">${i}</option>`).join('');
@@ -271,7 +272,7 @@
       const yearSel = document.getElementById('yearFilter');
       yearSel.innerHTML = '<option value="">All years</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
 
-      const tags = uniq(certs.flatMap(c => (c.tags||[]))).slice(0, 24);
+      const tags = uniq(visible.flatMap(c => (c.tags||[]))).slice(0, 24);
       const tagBar = document.getElementById('tagBar');
       tagBar.innerHTML = tags.map(t => `<button class="chip" data-tag="${t}" aria-pressed="false">${t}</button>`).join('');
     }
