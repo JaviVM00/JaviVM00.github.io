@@ -109,6 +109,7 @@
         <!--
         <a href="mailto:@gmail.com">Email</a>
         -->
+         <a href="https://www.credly.com/users/javier-vargas-moreno/badges#credly">Credly</a>
       </div>
     </header>
 
@@ -139,8 +140,8 @@
       "headerAvatarUrl": "",  
       "socials": {
         "github": "https://github.com/JVM00",
-        "linkedin": "https://www.linkedin.com/in/javier-vargas-moreno-757746a7/"
-      
+        "linkedin": "https://www.linkedin.com/in/javier-vargas-moreno-757746a7/",
+         "credly": "https://www.credly.com/users/javier-vargas-moreno/badges#credly" 
       }
     },
     
@@ -434,6 +435,7 @@ function renderGrid() {
       const links = [];
       if (owner.socials?.github) links.push(`<a href="${owner.socials.github}" target="_blank" rel="noreferrer">GitHub</a>`);
       if (owner.socials?.linkedin) links.push(`<a href="${owner.socials.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>`);
+      if (owner.socials?.credly)   links.push(`<a href="${owner.socials.credly}" target="_blank" rel="noreferrer">Credly</a>`);
       document.querySelector('.socials').innerHTML = links.join(' &nbsp;·&nbsp; ');
     }
 
